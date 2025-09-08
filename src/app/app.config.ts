@@ -10,22 +10,14 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 
 import { routes } from './app.routes';
+import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideFirebaseApp(() =>
-      initializeApp({
-        apiKey: 'AIzaSyBygGl6u6McYnumSxPXG00yWyKpW35QrOk',
-        authDomain: 'clipplayground.firebaseapp.com',
-        projectId: 'clipplayground',
-        storageBucket: 'clipplayground.firebasestorage.app',
-        messagingSenderId: '540632334894',
-        appId: '1:540632334894:web:61f15b65eb387b1231d5bf',
-      }),
-    ),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
