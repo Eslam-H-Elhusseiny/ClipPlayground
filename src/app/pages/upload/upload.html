@@ -1,0 +1,60 @@
+<section class="container mx-auto my-8 bg-secondary p-6">
+  <div class="rounded relative flex flex-col">
+    <h1 class="font-bold text-2xl mb-6">Upload Video</h1>
+
+    @if (!nextStep()) {
+      <!-- Upload Dropbox -->
+      <div
+        appEventBlocker
+        (drop)="storeFile($event)"
+        (dragenter)="isDragOver.set(true)"
+        (dragover)="isDragOver.set(true)"
+        (dragend)="isDragOver.set(false)"
+        (dragleave)="isDragOver.set(false)"
+        (mouseleave)="isDragOver.set(false)"
+        [class]="
+          isDragOver() ? 'bg-indigo-400 border-indigo-400 border-solid' : ''
+        "
+        class="w-full px-10 py-40 rounded text-center cursor-pointer border border-dashed border-gray-400 transition duration-500 hover:text-white hover:bg-indigo-400 hover:border-indigo-400 hover:border-solid text-xl"
+      >
+        <h5>Drop your file here (mp4 only!)</h5>
+      </div>
+    } @else {
+      <!-- Form -->
+      <form [formGroup]="uploadForm" (ngSubmit)="uploadFile()">
+        <!-- Screenshots -->
+        <h2 class="mb-4 text-xl">Select a Thumbnail</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div class="border-8 cursor-pointer border-green-400">
+            <img src="assets/img/1.jpg" />
+          </div>
+          <div class="border-8 cursor-pointer border-transparent">
+            <img src="assets/img/2.jpg" />
+          </div>
+          <div class="border-8 cursor-pointer border-transparent">
+            <img src="assets/img/3.jpg" />
+          </div>
+        </div>
+
+        <!-- Title -->
+        <div class="mt-4">
+          <label class="block text-xl mb-4">Title</label>
+          <app-input-field
+            [control]="uploadForm.controls.title"
+            placeholder="Enter a title for your video."
+          ></app-input-field>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="mt-4 text-right">
+          <button
+            type="submit"
+            class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none"
+          >
+            Publish
+          </button>
+        </div>
+      </form>
+    }
+  </div>
+</section>

@@ -1,0 +1,36 @@
+@if (alert.getAlert().showAlert) {
+  <app-alert [color]="alert.getAlert().alertColor">
+    {{ alert.getAlert().alertMessage }}
+  </app-alert>
+}
+
+<!-- Login Form -->
+<form [formGroup]="loginForm" (ngSubmit)="login()">
+  <!-- Email -->
+  <div class="mb-3">
+    <label class="mb-2 inline-block">Email</label>
+
+    <app-input-field
+      type="email"
+      [control]="loginForm.controls.email"
+      placeholder="Enter Your Email"
+    ></app-input-field>
+  </div>
+  <!-- Password -->
+  <div class="mb-3">
+    <label class="mb-2 inline-block">Password</label>
+
+    <app-input-field
+      type="password"
+      [control]="loginForm.controls.password"
+      placeholder="Enter Your Password"
+    ></app-input-field>
+  </div>
+  <button
+    type="submit"
+    [disabled]="!loginForm.valid || inSubmission()"
+    class="block w-full rounded mt-6 bg-indigo-400 px-3 py-2.5 text-white transition hover:bg-indigo-500 disabled:bg-indigo-400 disabled:opacity-50"
+  >
+    Submit
+  </button>
+</form>

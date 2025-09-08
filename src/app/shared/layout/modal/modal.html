@@ -1,0 +1,25 @@
+<!-- Auth Modal -->
+<dialog
+  #baseDialog
+  (click)="modalManager.toggleModal(modalId())"
+  class="fixed rounded-md inset-0 z-50 m-auto w-3/12 min-w-[25rem] overflow-y-auto text-white backdrop:bg-black/50 backdrop:backdrop-blur-xs"
+>
+  <div
+    class="bg-secondary flex flex-col p-6"
+    (click)="$event.stopPropagation()"
+  >
+    <!--Title-->
+    <div class="flex items-center justify-between pb-4">
+      <ng-content select="[heading]"></ng-content>
+      <!-- Modal Close Button -->
+      <div
+        class="modal-close z-50 cursor-pointer"
+        (click)="modalManager.toggleModal(modalId())"
+      >
+        &#x2715;
+      </div>
+    </div>
+
+    <ng-content></ng-content>
+  </div>
+</dialog>

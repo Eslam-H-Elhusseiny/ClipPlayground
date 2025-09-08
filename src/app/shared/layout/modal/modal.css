@@ -1,0 +1,16 @@
+dialog {
+  opacity: 0;
+  transform: scale(0.5);
+  transition: 0.2s;
+  transition-behavior: allow-discrete;
+}
+
+dialog[open] {
+  opacity: 1;
+  transform: scale(1);
+
+  @starting-style {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}

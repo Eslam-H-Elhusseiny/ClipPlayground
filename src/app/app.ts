@@ -1,12 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Nav } from './core/layout/nav/nav';
+import { AuthModal } from './core/auth/auth-modal/auth-modal';
+import { AuthStore } from './shared/services/auth-store';
+import { AsyncPipe } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [Nav, AuthModal, AsyncPipe, RouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
   protected title = 'ClipPlayground';
+  auth = inject(AuthStore);
 }

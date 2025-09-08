@@ -1,0 +1,77 @@
+@if (alert.getAlert().showAlert) {
+  <app-alert [color]="alert.getAlert().alertColor">
+    {{ alert.getAlert().alertMessage }}
+  </app-alert>
+}
+
+<!-- Registration Form -->
+<form [formGroup]="registerForm" (ngSubmit)="registerUser()">
+  <!-- Name -->
+  <div class="mb-3">
+    <label class="mb-2 inline-block">Name</label>
+
+    <app-input-field
+      placeholder="Type Your Name"
+      [control]="registerForm.controls.name"
+    ></app-input-field>
+  </div>
+
+  <!-- Email -->
+  <div class="mb-3">
+    <label class="mb-2 inline-block">Email</label>
+
+    <app-input-field
+      type="email"
+      placeholder="Type Your Email"
+      [control]="registerForm.controls.email"
+    ></app-input-field>
+  </div>
+
+  <!-- Age -->
+  <div class="mb-3">
+    <label class="mb-2 inline-block">Age</label>
+
+    <app-input-field
+      type="number"
+      placeholder="Enter Your Age"
+      [control]="registerForm.controls.age"
+    ></app-input-field>
+  </div>
+
+  <!-- Password -->
+  <div class="mb-3">
+    <label class="mb-2 inline-block">Password</label>
+
+    <app-input-field
+      type="password"
+      placeholder="Enter Password"
+      [control]="registerForm.controls.password"
+    ></app-input-field>
+  </div>
+  <!-- Confirm Password -->
+  <div class="mb-3">
+    <label class="mb-2 inline-block">Confirm Password</label>
+
+    <app-input-field
+      type="password"
+      placeholder="Confirm Password"
+      [control]="registerForm.controls.confirmPassword"
+    ></app-input-field>
+  </div>
+  <!-- ## Phone Number
+  <div class="mb-3">
+    <label class="mb-2 inline-block">Phone Number</label>
+    <input
+      type="text"
+      class="block w-full rounded border border-gray-400 bg-transparent px-3 py-1.5 text-gray-200 transition duration-500 focus:border-indigo-400 focus:outline-none"
+      placeholder="Enter Phone Number"
+    />
+  </div> -->
+  <button
+    type="submit"
+    [disabled]="!registerForm.valid || inSubmission()"
+    class="block w-full rounded mt-6 bg-indigo-400 px-3 py-2.5 text-white transition hover:bg-indigo-500 disabled:bg-indigo-400 disabled:opacity-50"
+  >
+    Submit
+  </button>
+</form>
