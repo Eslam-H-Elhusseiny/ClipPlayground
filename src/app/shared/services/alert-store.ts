@@ -15,7 +15,7 @@ export class AlertStore {
     message: string,
     color: string,
     visible: boolean = true,
-    autoClearMs: number = 1500,
+    autoClearMs?: number,
   ): void {
     this.alert.set({
       alertMessage: message,

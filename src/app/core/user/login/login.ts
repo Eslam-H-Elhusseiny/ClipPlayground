@@ -35,12 +35,27 @@ export class Login {
   async login() {
     this.inSubmission.set(true);
 
-    this.alert.setAlert('Please Wait, While Signing You In.', 'blue', true);
+    this.alert.setAlert(
+      '🔐 Logging you in, please wait...',
+      'blue',
+      true,
+      1500,
+    );
     try {
       await this.auth.login(this.loginForm.getRawValue());
-      this.alert.setAlert('Success!', 'green', true);
+      this.alert.setAlert(
+        '✅ You have successfully logged in!',
+        'green',
+        true,
+        1500,
+      );
     } catch (error) {
-      this.alert.setAlert('Login failed. Please try again.', 'red', true);
+      this.alert.setAlert(
+        '⛔ Login failed. Please check your credentials and try again.',
+        'red',
+        true,
+        1500,
+      );
       this.inSubmission.set(false);
       console.error(error);
       return;

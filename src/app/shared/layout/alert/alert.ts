@@ -10,6 +10,6 @@ export class Alert {
   color = input('blue');
 
   get bgColor() {
-    return `bg-${this.color()}-400`;
+    return `bg-${this.color()}-300`;
   }
 }

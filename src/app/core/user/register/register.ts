@@ -18,27 +18,36 @@ export class Register {
 
   inSubmission = signal(false);
 
-  registerForm = this.fb.nonNullable.group({
-    name: ['', [Validators.required, Validators.minLength(3)]],
-    email: ['', [Validators.required, Validators.email]],
-    age: [, [Validators.required, Validators.min(13), Validators.max(99)]],
-    password: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern(
-          /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
-        ),
+  registerForm = this.fb.nonNullable.group(
+    {
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      age: [, [Validators.required, Validators.min(13), Validators.max(99)]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
+          ),
+        ],
       ],
-    ],
-    confirmPassword: ['', [Validators.required]],
-    // phoneNumber: [''],
-  });
+      confirmPassword: ['', [Validators.required]],
+      // phoneNumber: [''],
+    },
+    {
+      validators: (registerForm) => {
+        const password = registerForm.get('password')?.value;
+        const confirmPassword = registerForm.get('confirmPassword')?.value;
+        return password === confirmPassword ? null : { passwordMismatch: true };
+      },
+    },
+  );
 
   async registerUser() {
     this.inSubmission.set(true);
     this.alert.setAlert(
-      'Please Wait, Your Account Is Being Created.',
+      '📝 Creating your account, please wait...',
       'blue',
       true,
       2000,
@@ -46,10 +55,20 @@ export class Register {
 
     try {
       await this.auth.createUser(this.registerForm.getRawValue());
-      this.alert.setAlert('Success!', 'green', true);
+      this.alert.setAlert(
+        '✅ Your account has been created successfully!',
+        'green',
+        true,
+        2000,
+      );
     } catch (error) {
       this.inSubmission.set(false);
-      this.alert.setAlert('Register failed. Please try again.', 'red', true);
+      this.alert.setAlert(
+        '⛔ Registration failed. Please try again.',
+        'red',
+        true,
+        2000,
+      );
 
       console.error(error);
       return;
