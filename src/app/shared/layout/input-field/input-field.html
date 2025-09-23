@@ -24,9 +24,13 @@
     >
   }
   @if (control().hasError("pattern")) {
-    <span class="ms-2 text-sm text-red-400">
-      Passwords Must Be At Least 8 Characters Long, Contains 1 Uppercase
-      Letter,1 Lowercase Letter And 1 Number.
+    <span class="inline-block ms-2 text-sm text-red-400">
+      Passwords Must Be At Least 8 Characters,
+      <br />
+      including uppercase, lowercase, and a number.
     </span>
+  }
+  @if (control().hasError("passwordMismatch")) {
+    <span class="ms-2 text-sm text-red-400"> Passwords do not match. </span>
   }
 }

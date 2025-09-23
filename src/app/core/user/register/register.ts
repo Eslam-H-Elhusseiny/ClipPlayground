@@ -38,8 +38,15 @@ export class Register {
     {
       validators: (registerForm) => {
         const password = registerForm.get('password')?.value;
-        const confirmPassword = registerForm.get('confirmPassword')?.value;
-        return password === confirmPassword ? null : { passwordMismatch: true };
+        const confirmPassword = registerForm.get('confirmPassword');
+
+        if (password !== confirmPassword?.value) {
+          confirmPassword?.setErrors({ passwordMismatch: true });
+        } else {
+          confirmPassword?.setErrors(null);
+        }
+
+        return null;
       },
     },
   );
