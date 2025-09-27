@@ -1,4 +1,154 @@
-<!-- Main Content -->
-<p class="container mx-auto mt-4">
-  This is a basic about page to demonstrate basic routing capabilities.
-</p>
+<section class="px-4 py-10">
+  <div
+    class="mx-auto max-w-4xl rounded-2xl bg-gradient-to-br from-gray-900/50 to-gray-800/70 p-10 backdrop-blur-md border border-indigo-500/20 shadow-2xl text-gray-200"
+  >
+    <!-- Avatar -->
+    <div class="flex justify-center mb-2">
+      <div
+        class="relative transition-all duration-300 ease-in-out hover:scale-108 hover:rotate-4"
+      >
+        <img
+          src="/assets/img/avatar.jpg"
+          alt="Eslam Elhusseiny"
+          class="w-[11rem] aspect-square rounded-full border-2 border-indigo-400 shadow-lg shadow-indigo-700/50 transition-all duration-300 hover:shadow-xl"
+        />
+      </div>
+    </div>
+
+    <!-- Morphing Title -->
+    <div class="flex items-center justify-center mb-2">
+      <om-word-morph
+        [words]="['About Me', 'Eslam Elhusseiny']"
+        [morphDelay]="3000"
+        styleClass="font-bold font-mono text-indigo-400 drop-shadow-2xl"
+      ></om-word-morph>
+    </div>
+
+    <!-- Bio Content -->
+    <div class="space-y-6 text-md leading-relaxed font-mono">
+      <p>
+        Hi! I'm a passionate full-stack developer focused on building fast,
+        interactive, and scalable web applications. This project —
+        <span class="text-indigo-400 font-semibold">ClipPlayground</span> — is a
+        video-sharing platform tailored for gamers and creators, showcasing my
+        technical strengths and creative direction.
+      </p>
+
+      <p>
+        Built with <strong class="text-indigo-400">Angular 20</strong> and
+        <strong class="text-indigo-400">Signals</strong>, the app uses
+        <strong class="text-indigo-400">RxJS</strong> for reactive flows,
+        <strong class="text-indigo-400">Firebase</strong> for authentication and
+        backend, and <strong class="text-indigo-400">Video.js</strong> for fast
+        video delivery.
+      </p>
+
+      <p>
+        This project sharpened my skills in component architecture, reactivity,
+        and real-time features — with a heavy focus on performance and UX.
+      </p>
+
+      <p>
+        Whether you're building from scratch or leveling up an existing app — I
+        enjoy solving hard problems and pushing front-end limits.
+      </p>
+    </div>
+
+    <!-- Social Links -->
+    <div
+      class="mt-8 text-center flex flex-wrap justify-center gap-4 text-sm font-bold items-center"
+    >
+      <!-- Github -->
+      <a
+        href="https://github.com/Eslam-H-Elhusseiny"
+        target="_blank"
+        rel="noopener"
+        class="relative group px-5 py-2 rounded-full text-indigo-300 border border-indigo-500 transition duration-450 overflow-hidden transform hover:scale-110 shadow-[0_0_8px_rgba(99,102,241,0.2)] hover:shadow-[0_0_15px_rgba(99,102,241,0.8)] hover:backdrop-blur-sm"
+      >
+        <span
+          class="relative z-10 font-mono group-hover:text-gray-900 transition-all duration-450"
+        >
+          GitHub
+        </span>
+        <span
+          class="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-450 origin-left shadow-[0_0_8px_rgba(129,140,248,0.6)]"
+        ></span>
+      </a>
+
+      <span class="hidden sm:inline text-indigo-500 select-none">|</span>
+
+      <!-- Linkedin -->
+      <a
+        href="https://linkedin.com/in/eslam-h-elhusseiny"
+        target="_blank"
+        rel="noopener"
+        class="relative group px-5 py-2 rounded-full text-indigo-300 border border-indigo-500 transition duration-450 overflow-hidden transform hover:scale-110 shadow-[0_0_8px_rgba(99,102,241,0.2)] hover:shadow-[0_0_15px_rgba(99,102,241,0.8)] hover:backdrop-blur-sm"
+      >
+        <span
+          class="relative z-10 font-mono group-hover:text-gray-900 transition-all duration-450"
+        >
+          LinkedIn
+        </span>
+        <span
+          class="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-450 origin-left shadow-[0_0_8px_rgba(129,140,248,0.6)]"
+        ></span>
+      </a>
+
+      <span class="hidden sm:inline text-indigo-500 select-none">|</span>
+
+      <!-- CV -->
+      <a
+        href="/assets/files/eslam_elhusseiny_cv.pdf"
+        download
+        class="relative group px-5 py-2 rounded-full text-indigo-300 border border-indigo-500 transition duration-450 overflow-hidden transform hover:scale-110 shadow-[0_0_8px_rgba(99,102,241,0.2)] hover:shadow-[0_0_15px_rgba(99,102,241,0.8)] hover:backdrop-blur-sm"
+      >
+        <span
+          class="relative z-10 font-mono group-hover:text-gray-900 transition-all duration-450"
+        >
+          Download Resume
+        </span>
+        <span
+          class="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-450 origin-left shadow-[0_0_8px_rgba(129,140,248,0.6)]"
+        ></span>
+      </a>
+
+      <span class="hidden sm:inline text-indigo-500 select-none">|</span>
+
+      <!-- Whatsapp -->
+      <a
+        href="https://wa.me/201274173626"
+        target="_blank"
+        rel="noopener"
+        class="relative group px-5 py-2 rounded-full text-indigo-300 border border-indigo-500 transition duration-450 overflow-hidden transform hover:scale-110 shadow-[0_0_8px_rgba(99,102,241,0.2)] hover:shadow-[0_0_15px_rgba(99,102,241,0.8)] hover:backdrop-blur-sm"
+      >
+        <span
+          class="relative z-10 font-mono group-hover:text-gray-900 transition-all duration-450"
+        >
+          WhatsApp
+        </span>
+        <span
+          class="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-450 origin-left shadow-[0_0_8px_rgba(129,140,248,0.6)]"
+        ></span>
+      </a>
+
+      <span class="hidden sm:inline text-indigo-500 select-none">|</span>
+
+      <!-- Gmail -->
+      <a
+        href="mailto:eslam.hamed.elhusseiny@gmail.com"
+        target="_blank"
+        rel="noopener"
+        class="relative group px-5 py-2 rounded-full text-indigo-300 border border-indigo-500 transition duration-450 overflow-hidden transform hover:scale-110 shadow-[0_0_8px_rgba(99,102,241,0.2)] hover:shadow-[0_0_15px_rgba(99,102,241,0.8)] hover:backdrop-blur-sm"
+      >
+        <span
+          class="relative z-10 font-mono group-hover:text-gray-900 transition-all duration-450"
+        >
+          Gmail
+        </span>
+        <span
+          class="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-450 origin-left shadow-[0_0_8px_rgba(129,140,248,0.6)]"
+        ></span>
+      </a>
+    </div>
+  </div>
+</section>

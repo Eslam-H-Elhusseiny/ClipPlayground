@@ -7,8 +7,8 @@
 <!-- Registration Form -->
 <form [formGroup]="registerForm" (ngSubmit)="registerUser()">
   <!-- Name -->
-  <div class="mb-3">
-    <label class="mb-2 inline-block">Name</label>
+  <div>
+    <label class="mb-1 inline-block">Name</label>
 
     <app-input-field
       placeholder="Type Your Name"
@@ -17,8 +17,8 @@
   </div>
 
   <!-- Email -->
-  <div class="mb-3">
-    <label class="mb-2 inline-block">Email</label>
+  <div>
+    <label class="mb-1 inline-block">Email</label>
 
     <app-input-field
       type="email"
@@ -28,8 +28,8 @@
   </div>
 
   <!-- Age -->
-  <div class="mb-3">
-    <label class="mb-2 inline-block">Age</label>
+  <div>
+    <label class="mb-1 inline-block">Age</label>
 
     <app-input-field
       type="number"
@@ -39,8 +39,8 @@
   </div>
 
   <!-- Password -->
-  <div class="mb-3">
-    <label class="mb-2 inline-block">Password</label>
+  <div>
+    <label class="mb-1 inline-block">Password</label>
 
     <app-input-field
       type="password"
@@ -49,8 +49,8 @@
     ></app-input-field>
   </div>
   <!-- Confirm Password -->
-  <div class="mb-3">
-    <label class="mb-2 inline-block">Confirm Password</label>
+  <div>
+    <label class="mb-1 inline-block">Confirm Password</label>
 
     <app-input-field
       type="password"
@@ -59,8 +59,8 @@
     ></app-input-field>
   </div>
   <!-- ## Phone Number
-  <div class="mb-3">
-    <label class="mb-2 inline-block">Phone Number</label>
+  <div>
+    <label class="mb-1 inline-block">Phone Number</label>
     <input
       type="text"
       class="block w-full rounded border border-gray-400 bg-transparent px-3 py-1.5 text-gray-200 transition duration-500 focus:border-indigo-400 focus:outline-none"
@@ -70,7 +70,7 @@
   <button
     type="submit"
     [disabled]="!registerForm.valid || inSubmission()"
-    class="block w-full rounded mt-6 bg-indigo-400 px-3 py-2.5 text-white transition hover:bg-indigo-500 disabled:bg-indigo-400 disabled:opacity-50"
+    class="block w-full rounded mt-2 bg-indigo-400 px-3 py-2.5 text-white transition hover:bg-indigo-500 disabled:bg-indigo-400 disabled:opacity-50"
   >
     Submit
   </button>

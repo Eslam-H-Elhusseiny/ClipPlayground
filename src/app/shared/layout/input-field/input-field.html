@@ -4,33 +4,40 @@
   [placeholder]="placeholder()"
   [formControl]="control()"
 />
-@if (control().touched && control().dirty) {
-  @if (control().hasError("required")) {
-    <span class="ms-2 text-sm text-red-400">Field Is Required.</span>
+<div class="min-h-6">
+  @if (control().touched && control().dirty) {
+    @if (control().hasError("required")) {
+      <span class="ms-2 text-sm text-red-400">Field Is Required.</span>
+    }
+
+    @if (control().hasError("minlength")) {
+      <span class="ms-2 text-sm text-red-400">
+        This Field Should Be At Least
+        {{ control().getError("minlength").requiredLength }}
+        Characters Long.
+      </span>
+    }
+
+    @if (control().hasError("email")) {
+      <span class="ms-2 text-sm text-red-400">Please Enter A Valid Email.</span>
+    }
+
+    @if (control().hasError("min") || control().hasError("max")) {
+      <span class="ms-2 text-sm text-red-400"
+        >Please Enter A Valid Age. (Min Age Is 13)</span
+      >
+    }
+
+    @if (control().hasError("pattern")) {
+      <span class="inline-block ms-2 text-sm text-red-400">
+        Passwords Must Be At Least 8 Characters,
+        <br />
+        including uppercase, lowercase, and a number.
+      </span>
+    }
+
+    @if (control().hasError("passwordMismatch")) {
+      <span class="ms-2 text-sm text-red-400"> Passwords do not match. </span>
+    }
   }
-  @if (control().hasError("minlength")) {
-    <span class="ms-2 text-sm text-red-400">
-      This Field Should Be At Least
-      {{ control().getError("minlength").requiredLength }}
-      Characters Long.
-    </span>
-  }
-  @if (control().hasError("email")) {
-    <span class="ms-2 text-sm text-red-400">Please Enter A Valid Email.</span>
-  }
-  @if (control().hasError("min") || control().hasError("max")) {
-    <span class="ms-2 text-sm text-red-400"
-      >Please Enter A Valid Age. (Min Age Is 13)</span
-    >
-  }
-  @if (control().hasError("pattern")) {
-    <span class="inline-block ms-2 text-sm text-red-400">
-      Passwords Must Be At Least 8 Characters,
-      <br />
-      including uppercase, lowercase, and a number.
-    </span>
-  }
-  @if (control().hasError("passwordMismatch")) {
-    <span class="ms-2 text-sm text-red-400"> Passwords do not match. </span>
-  }
-}
+</div>

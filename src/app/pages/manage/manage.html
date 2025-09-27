@@ -1,13 +1,40 @@
 <!-- Top Bar -->
-<section class="container mx-auto my-8 bg-secondary p-6">
-  <div class="rounded relative flex justify-between">
-    <a routerLink="/upload" class="bg-indigo-400 text-white py-4 px-10 text-xl"
+<section class="py-10 px-4 min-h-[83vh]">
+  <div
+    class="container mx-auto bg-secondary p-6 rounded-2xl flex justify-between"
+  >
+    <a
+      routerLink="/upload"
+      class="bg-indigo-400 text-white py-3 px-10 text-base rounded-full hover:bg-indigo-500 transition max-sm:hidden"
       >Upload Videos</a
     >
+    <a
+      routerLink="/upload"
+      class="bg-indigo-400 text-white py-3 px-4 text-base rounded-full hover:bg-indigo-500 transition min-sm:hidden"
+      ><svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12 16V4m0 0l-4 4m4-4l4 4"
+        />
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M20 16.5V18a2.25 2.25 0 01-2.25 2.25H6.25A2.25 2.25 0 014 18v-1.5"
+        />
+      </svg>
+    </a>
 
     <!-- Sort Videos -->
     <select
-      class="bg-slate-500 px-8 text-xl underline outline-none appearance-none"
+      class="bg-slate-600 py-3 px-8 text-base underline outline-none appearance-none rounded-full cursor-pointer hover:bg-slate-500 focus:bg-slate-500 transition"
       (change)="sortClips($event)"
     >
       <option value="1" [selected]="sortOrder() === '1'">
@@ -18,52 +45,118 @@
       </option>
     </select>
   </div>
-</section>
 
-<!-- User's Video Section -->
-<div class="container mx-auto my-8">
-  <!-- Video List -->
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-    @for (clip of orderedClips(); track clip.docID) {
-      <div
-        class="mt-6 rounded-tl-2xl rounded-br-2xl shadow-xl bg-secondary flex flex-col justify-start"
-      >
-        <!-- Image -->
-        <a href="#">
-          <img
-            class="card-img-top rounded-tl-2xl w-full"
-            src="assets/img/1.jpg"
-          />
-        </a>
+  <!-- User's Video Section -->
+  <div class="container mx-auto">
+    <!-- Video List -->
+    @defer (on timer(500)) {
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        @for (clip of orderedClips(); track clip.docID) {
+          <div
+            class="mt-6 rounded-tl-2xl rounded-br-2xl shadow-xl bg-secondary flex flex-col justify-start"
+          >
+            <!-- Image -->
+            <a href="#">
+              <img
+                class="card-img-top rounded-tl-2xl w-full"
+                src="assets/img/1.jpg"
+              />
+            </a>
 
-        <!-- Body -->
-        <div class="px-5 py-4 text-2xl">
-          <!-- Link -->
-          <a href="#" class="inline-block font-bold mb-4">
-            {{ clip.title }}
-          </a>
-          <p class="text-sm text-right">
-            {{ clip.timestamp.toDate() | date: "dd MMM yyyy 'at' hh:mm:s a" }}
-          </p>
+            <!-- Body -->
+            <div class="px-5 py-4 text-2xl">
+              <!-- Link -->
+              <a href="#" class="inline-block font-bold mb-4">
+                {{ clip.title }}
+              </a>
+              <p class="text-sm text-right">
+                {{
+                  clip.timestamp.toDate() | date: "dd MMM yyyy 'at' hh:mm:s a"
+                }}
+              </p>
+            </div>
+
+            <!-- Actions -->
+            <div
+              class="text-center text-2xl m-4 mt-0 bg-gray-800 transition hover:bg-indigo-400 rounded-2xl"
+            >
+              <a
+                (click)="openModal($event, clip)"
+                href="#"
+                class="inline-block p-4 w-full"
+              >
+                <span class="inline-block">🛠️</span>
+                Edit
+              </a>
+            </div>
+          </div>
+        }
+      </div>
+    } @placeholder {
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <!-- Card-->
+        <div
+          class="animate-pulse mt-6 rounded-2xl shadow-xl bg-secondary flex flex-col justify-start"
+        >
+          <!-- Placeholder Image-->
+          <div class="h-[20rem] bg-gray-800 rounded-t-2xl w-full"></div>
+
+          <!-- Placeholder Body -->
+          <div class="px-5 py-4">
+            <div class="h-12 bg-gray-700 rounded w-3/4"></div>
+          </div>
+
+          <!-- Placeholder Actions -->
+          <div
+            class="text-center text-2xl m-4 mt-0 bg-gray-800 rounded-2xl p-4"
+          >
+            <div class="h-6 rounded w-1/2 mx-auto"></div>
+          </div>
         </div>
 
-        <!-- Actions -->
+        <!-- Card-->
         <div
-          class="text-center text-2xl m-4 mt-0 bg-gray-800 transition hover:bg-indigo-400 rounded-2xl"
+          class="animate-pulse mt-6 rounded-2xl shadow-xl bg-secondary flex flex-col justify-start"
         >
-          <a
-            (click)="openModal($event, clip)"
-            href="#"
-            class="inline-block p-4 w-full"
+          <!-- Placeholder Image-->
+          <div class="h-[20rem] bg-gray-800 rounded-t-2xl w-full"></div>
+
+          <!-- Placeholder Body -->
+          <div class="px-5 py-4">
+            <div class="h-12 bg-gray-700 rounded w-3/4"></div>
+          </div>
+
+          <!-- Placeholder Actions -->
+          <div
+            class="text-center text-2xl m-4 mt-0 bg-gray-800 rounded-2xl p-4"
           >
-            <span class="inline-block">🛠️</span>
-            Edit
-          </a>
+            <div class="h-6 rounded w-1/2 mx-auto"></div>
+          </div>
+        </div>
+
+        <!-- Card-->
+        <div
+          class="animate-pulse mt-6 rounded-2xl shadow-xl bg-secondary flex flex-col justify-start"
+        >
+          <!-- Placeholder Image-->
+          <div class="h-[20rem] bg-gray-800 rounded-t-2xl w-full"></div>
+
+          <!-- Placeholder Body -->
+          <div class="px-5 py-4">
+            <div class="h-12 bg-gray-700 rounded w-3/4"></div>
+          </div>
+
+          <!-- Placeholder Actions -->
+          <div
+            class="text-center text-2xl m-4 mt-0 bg-gray-800 rounded-2xl p-4"
+          >
+            <div class="h-6 rounded w-1/2 mx-auto"></div>
+          </div>
         </div>
       </div>
     }
   </div>
-</div>
+</section>
 
 <app-edit
   [activeClip]="activeClip()"

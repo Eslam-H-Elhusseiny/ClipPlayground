@@ -16,6 +16,12 @@ export const routes: Routes = [
     title: 'About Us | ClipPlayground',
   },
   {
+    path: 'contact',
+    loadComponent: () =>
+      import('./pages/contact/contact').then((c) => c.Contact),
+    title: 'Contact Us | ClipPlayground',
+  },
+  {
     path: 'clip/:id',
     loadComponent: () => import('./pages/clip/clip').then((c) => c.Clip),
     title: `Clip | ClipPlayground`,

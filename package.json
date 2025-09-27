@@ -30,6 +30,7 @@
     "@angular/platform-browser": "^20.1.0",
     "@angular/router": "^20.1.0",
     "@omnedia/ngx-lava-lamp": "^3.0.0",
+    "@omnedia/ngx-word-morph": "^3.0.0",
     "@tailwindcss/postcss": "^4.1.11",
     "@types/uuid": "^10.0.0",
     "ogl": "^1.0.11",

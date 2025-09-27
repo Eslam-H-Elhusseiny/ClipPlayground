@@ -4,10 +4,11 @@ import { AuthModal } from './core/auth/auth-modal/auth-modal';
 import { AuthStore } from './shared/services/auth-store';
 import { AsyncPipe } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { Footer } from './core/layout/footer/footer';
 
 @Component({
   selector: 'app-root',
-  imports: [Nav, AuthModal, AsyncPipe, RouterOutlet],
+  imports: [Nav, AuthModal, AsyncPipe, RouterOutlet, Footer],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

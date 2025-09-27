@@ -18,6 +18,16 @@ export class Nav {
   modalManager = inject(ModalManager);
   auth = inject(AuthStore);
 
+  isMenuOpen: boolean = false;
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu() {
+    this.isMenuOpen = false;
+  }
+
   openModal($event: Event) {
     $event.preventDefault();
 
