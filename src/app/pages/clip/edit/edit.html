@@ -22,7 +22,7 @@
     <div class="flex justify-between mt-6 text-white">
       <button
         type="button"
-        class="bg-red-500 py-2 px-4 rounded hover:bg-red-600 transition disabled:opacity-50"
+        class="bg-red-500 py-2 px-4 rounded-md cursor-pointer hover:bg-red-600 transition disabled:opacity-50"
         [disabled]="inSubmission()"
         (click)="deleteClip()"
       >
@@ -30,7 +30,7 @@
       </button>
       <button
         type="submit"
-        class="py-2 px-4 border border-transparent shadow-sm rounded-md bg-indigo-600 focus:outline-none"
+        class="py-2 px-4 border border-transparent shadow-sm rounded-md cursor-pointer bg-indigo-600 focus:outline-none"
         [class]="
           !editClipForm.valid || inSubmission() || editClipForm.pristine
             ? 'opacity-50'

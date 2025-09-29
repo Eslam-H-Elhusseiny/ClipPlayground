@@ -1,7 +1,7 @@
-<!-- Top Bar -->
 <section class="py-10 px-4 min-h-[83vh]">
+  <!-- Top Bar -->
   <div
-    class="container mx-auto bg-secondary p-6 rounded-2xl flex justify-between"
+    class="container mx-auto bg-secondary mb-12 p-6 rounded-2xl flex justify-between"
   >
     <a
       routerLink="/upload"
@@ -50,33 +50,9 @@
   <div class="container mx-auto">
     <!-- Video List -->
     @defer (on timer(500)) {
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div class="grid gap-10 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 px-4">
         @for (clip of orderedClips(); track clip.docID) {
-          <div
-            class="mt-6 rounded-tl-2xl rounded-br-2xl shadow-xl bg-secondary flex flex-col justify-start"
-          >
-            <!-- Image -->
-            <a href="#">
-              <img
-                class="card-img-top rounded-tl-2xl w-full"
-                src="assets/img/1.jpg"
-              />
-            </a>
-
-            <!-- Body -->
-            <div class="px-5 py-4 text-2xl">
-              <!-- Link -->
-              <a href="#" class="inline-block font-bold mb-4">
-                {{ clip.title }}
-              </a>
-              <p class="text-sm text-right">
-                {{
-                  clip.timestamp.toDate() | date: "dd MMM yyyy 'at' hh:mm:s a"
-                }}
-              </p>
-            </div>
-
-            <!-- Actions -->
+          <app-clip-card [clip]="clip">
             <div
               class="text-center text-2xl m-4 mt-0 bg-gray-800 transition hover:bg-indigo-400 rounded-2xl"
             >
@@ -89,70 +65,14 @@
                 Edit
               </a>
             </div>
-          </div>
+          </app-clip-card>
         }
       </div>
     } @placeholder {
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <!-- Card-->
-        <div
-          class="animate-pulse mt-6 rounded-2xl shadow-xl bg-secondary flex flex-col justify-start"
-        >
-          <!-- Placeholder Image-->
-          <div class="h-[20rem] bg-gray-800 rounded-t-2xl w-full"></div>
-
-          <!-- Placeholder Body -->
-          <div class="px-5 py-4">
-            <div class="h-12 bg-gray-700 rounded w-3/4"></div>
-          </div>
-
-          <!-- Placeholder Actions -->
-          <div
-            class="text-center text-2xl m-4 mt-0 bg-gray-800 rounded-2xl p-4"
-          >
-            <div class="h-6 rounded w-1/2 mx-auto"></div>
-          </div>
-        </div>
-
-        <!-- Card-->
-        <div
-          class="animate-pulse mt-6 rounded-2xl shadow-xl bg-secondary flex flex-col justify-start"
-        >
-          <!-- Placeholder Image-->
-          <div class="h-[20rem] bg-gray-800 rounded-t-2xl w-full"></div>
-
-          <!-- Placeholder Body -->
-          <div class="px-5 py-4">
-            <div class="h-12 bg-gray-700 rounded w-3/4"></div>
-          </div>
-
-          <!-- Placeholder Actions -->
-          <div
-            class="text-center text-2xl m-4 mt-0 bg-gray-800 rounded-2xl p-4"
-          >
-            <div class="h-6 rounded w-1/2 mx-auto"></div>
-          </div>
-        </div>
-
-        <!-- Card-->
-        <div
-          class="animate-pulse mt-6 rounded-2xl shadow-xl bg-secondary flex flex-col justify-start"
-        >
-          <!-- Placeholder Image-->
-          <div class="h-[20rem] bg-gray-800 rounded-t-2xl w-full"></div>
-
-          <!-- Placeholder Body -->
-          <div class="px-5 py-4">
-            <div class="h-12 bg-gray-700 rounded w-3/4"></div>
-          </div>
-
-          <!-- Placeholder Actions -->
-          <div
-            class="text-center text-2xl m-4 mt-0 bg-gray-800 rounded-2xl p-4"
-          >
-            <div class="h-6 rounded w-1/2 mx-auto"></div>
-          </div>
-        </div>
+      <div class="grid gap-10 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 px-4">
+        <app-clip-placeholder></app-clip-placeholder>
+        <app-clip-placeholder></app-clip-placeholder>
+        <app-clip-placeholder></app-clip-placeholder>
       </div>
     }
   </div>

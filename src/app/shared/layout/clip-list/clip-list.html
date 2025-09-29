@@ -1,0 +1,27 @@
+<div class="grid gap-10 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 px-4">
+  @for (clip of clips(); track clip.docID) {
+    <app-clip-card [clip]="clip"></app-clip-card>
+  }
+  @if (isLoading()) {
+    <app-clip-placeholder></app-clip-placeholder>
+    <app-clip-placeholder></app-clip-placeholder>
+    <app-clip-placeholder></app-clip-placeholder>
+  }
+</div>
+@if (showLoadMore) {
+  <div class="text-center mt-8">
+    <button
+      class="inline-block py-3 px-8 text-white rounded-full bg-black shadow-lg shadow-black/50 transition duration-300 transform hover:bg-slate-800 disabled:opacity-50 disabled:bg-black"
+      (click)="loadClips(false)"
+      [disabled]="clipService.finishedLoading"
+    >
+      @if (isLoading()) {
+        Loading...
+      } @else if (clipService.finishedLoading) {
+        No More Clips
+      } @else {
+        Load More
+      }
+    </button>
+  </div>
+}

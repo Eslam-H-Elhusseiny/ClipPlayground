@@ -1,9 +1,10 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Params, RouterLink } from '@angular/router';
+import { ClipList } from '../../shared/layout/clip-list/clip-list';
 
 @Component({
   selector: 'app-clip',
-  imports: [RouterLink],
+  imports: [ClipList],
   templateUrl: './clip.html',
   styleUrl: './clip.css',
 })

@@ -4,11 +4,12 @@ import { ClipService } from '../../shared/services/clip-service';
 import { Clip } from '../../shared/models/clip';
 import { Edit } from '../clip/edit/edit';
 import { ModalManager } from '../../shared/services/modal-manager';
-import { DatePipe } from '@angular/common';
+import { ClipPlaceholder } from '../../shared/layout/clip-placeholder/clip-placeholder';
+import { ClipCard } from '../../shared/layout/clip-card/clip-card';
 
 @Component({
   selector: 'app-manage',
-  imports: [Edit, RouterLink, DatePipe],
+  imports: [Edit, RouterLink, ClipPlaceholder, ClipCard],
   templateUrl: './manage.html',
   styleUrl: './manage.css',
 })

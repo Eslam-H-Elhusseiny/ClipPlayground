@@ -1,6 +1,11 @@
 <header
   id="header"
-  class="relative bg-nav rounded-full mt-4 mx-4 md:mx-12 z-20 px-6"
+  class="sticky top-4 bg-nav rounded-full mt-4 mx-4 md:mx-12 z-20 px-6 transition-all duration-400 ease-in-out"
+  [class.opacity-0]="!isScrollingUp()"
+  [class.-translate-y-12]="!isScrollingUp()"
+  [class.pointer-events-none]="!isScrollingUp()"
+  [class.opacity-100]="isScrollingUp()"
+  [class.translate-y-0]="isScrollingUp()"
 >
   <nav class="container mx-auto flex items-center justify-between py-4 w-full">
     <a class="inline-block pl-4" routerLink="/">

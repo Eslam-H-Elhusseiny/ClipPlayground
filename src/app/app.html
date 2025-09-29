@@ -4,6 +4,8 @@
 
 <app-footer></app-footer>
 
+<app-back-to-top></app-back-to-top>
+
 @if (!(auth.authStateWithDelay$ | async)) {
   <app-auth-modal></app-auth-modal>
 }

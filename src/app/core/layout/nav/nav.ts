@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject, signal } from '@angular/core';
 import { ModalManager } from '../../../shared/services/modal-manager';
 import { AuthStore } from '../../../shared/services/auth-store';
 import { AsyncPipe } from '@angular/common';
@@ -18,6 +18,9 @@ export class Nav {
   modalManager = inject(ModalManager);
   auth = inject(AuthStore);
 
+  private previousScrollY = window.scrollY;
+  isScrollingUp = signal(true);
+
   isMenuOpen: boolean = false;
 
   toggleMenu() {
@@ -32,5 +35,17 @@ export class Nav {
     $event.preventDefault();
 
     this.modalManager.toggleModal('auth');
+  }
+
+  @HostListener('window:scroll', [])
+  onScroll(): void {
+    const currentScrollY = window.scrollY;
+
+    const isUp = currentScrollY < this.previousScrollY;
+    const scrollThreshold = currentScrollY > 150;
+
+    this.isScrollingUp.set(isUp || !scrollThreshold);
+
+    this.previousScrollY = currentScrollY;
   }
 }
