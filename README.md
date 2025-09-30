@@ -1,59 +1,90 @@
-# ClipPlayground
+# 🎬 ClipPlayground
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.4.
+**ClipPlayground** is a full-stack, high-performance video-sharing platform tailored for gamers and content creators. It offers a smooth, intuitive experience for uploading, managing, and viewing short video clips, leveraging the latest Angular features for optimal speed, reactivity, and scalability.
 
-## Development server
+## ✨ Key Features
 
-To start a local development server, run:
+| Feature                        | Description                                                                                                          | Stack Highlight |
+| :----------------------------- | :------------------------------------------------------------------------------------------------------------------- | :-------------- |
+| **🚀 High-Performance State**  | Utilizes **Angular Signals** for robust and highly reactive state management across all components.                  | Angular Signals |
+| **🔐 Secure Authentication**   | Full user registration, login, and session management powered by **Firebase Authentication**.                        | Firebase Auth   |
+| **☁️ Scalable Media Storage**  | Handles video and thumbnail uploads, processing, and storage using **Firebase Storage** and **Firestore**.           | Firebase        |
+| **▶️ Seamless Video Playback** | Integrated with **Video.js** for a customizable and modern clip viewing experience, including HLS streaming support. | Video.js        |
+| **🎨 Modern UI**               | A clean, responsive design built efficiently using the utility-first framework **Tailwind CSS**.                     | Tailwind CSS    |
+| **📈 Dynamic Data Flow**       | Efficiently manages asynchronous data streams and side effects using **RxJS**.                                       | RxJS            |
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 💻 Tech Stack
 
-## Code scaffolding
+This project leverages the latest advancements in web development:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+| Category               | Technology                         | Version |
+| :--------------------- | :--------------------------------- | :------ |
+| **Frontend Framework** | **Angular** (CLI)                  | 20.0.4  |
+| **State Management**   | **Angular Signals** & Services     | -       |
+| **Styling**            | **Tailwind CSS**                   | v4      |
+| **Backend & Database** | **Firebase** (Firestore & Storage) | -       |
+| **Video Player**       | **Video.js** & Themes              | v8+     |
+| **Asynchronous Ops**   | **RxJS**                           | v7+     |
+| **Language**           | **TypeScript**                     | -       |
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🛠️ Setup and Installation
 
-```bash
-ng generate --help
-```
+This guide assumes you have Node.js and the Angular CLI installed globally.
 
-## Building
+### Prerequisites
 
-To build the project run:
+1. **Angular CLI:**
 
-```bash
-ng build
-```
+   ```bash
+   npm install -g @angular/cli
+   ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+2. **Firebase Project:** You must have a Firebase project with **Authentication**, **Firestore**, and **Storage** enabled.
+3. **CORS Configuration:** For videos to play correctly, ensure your Firebase Storage bucket has the CORS policy defined in `cors.json` applied.
 
-## Running unit tests
+### Local Development
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+1. **Clone the repository:**
 
-```bash
-ng test
-```
+   ```bash
+   git clone [YOUR-REPO-URL] ClipPlayground
+   cd ClipPlayground
+   ```
 
-## Running end-to-end tests
+2. **Install dependencies:**
 
-For end-to-end (e2e) testing, run:
+   ```bash
+   npm install
+   ```
 
-```bash
-ng e2e
-```
+3. **Configure Environment:**
+   Update your Firebase credentials in `src/environments/environment.ts` and `src/environments/environment.prod.ts`.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+4. **Start the server:**
 
-## Additional Resources
+   ```bash
+   ng serve
+   ```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Open your browser to `http://localhost:4200/`. The application will automatically reload upon changes.
+
+---
+
+## ⚙️ Available Commands
+
+| Command                        | Description                                                                                             |
+| :----------------------------- | :------------------------------------------------------------------------------------------------------ |
+| `ng serve`                     | Starts the development server.                                                                          |
+| `ng build`                     | Compiles the project to the `dist/` directory. Use `--configuration production` for a production build. |
+| `ng generate component <name>` | Generates a new component.                                                                              |
+| `ng test`                      | Executes unit tests via Karma.                                                                          |
+
+---
+
+## 🤝 Contribution
+
+Feel free to open issues or submit pull requests. All contributions are welcome!
