@@ -1,7 +1,15 @@
-import { Routes } from '@angular/router';
+import { ActivatedRouteSnapshot, ResolveFn, Routes } from '@angular/router';
 import { AuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { Clip } from './shared/models/clip';
+import { inject } from '@angular/core';
+import { ClipService } from './shared/services/clip-service';
 
 const redirectUnauthorizedToHome = () => redirectUnauthorizedTo('/');
+const clipResolver: ResolveFn<Clip | null> = (
+  route: ActivatedRouteSnapshot,
+) => {
+  return inject(ClipService).resolveClip(route.paramMap.get('id')!);
+};
 
 export const routes: Routes = [
   {
@@ -24,12 +32,10 @@ export const routes: Routes = [
   {
     path: 'clip/:id',
     loadComponent: () => import('./pages/clip/clip').then((c) => c.Clip),
-    title: `Clip | ClipPlayground`,
-    data: {
-      authOnly: true,
-      authGuardPipe: redirectUnauthorizedToHome,
+    title: `Clip View | ClipPlayground`,
+    resolve: {
+      clip: clipResolver,
     },
-    canActivate: [AuthGuard],
   },
   {
     path: 'manage',

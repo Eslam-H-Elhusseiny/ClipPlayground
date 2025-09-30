@@ -5,6 +5,7 @@ import { AuthStore } from '../../../shared/services/auth-store';
 import { Alert } from '../../../shared/layout/alert/alert';
 import { AlertState } from '../../../shared/models/alert-state';
 import { AlertStore } from '../../../shared/services/alert-store';
+import { noWhitespaceValidator } from '../../../shared/validators/no-whitespace';
 
 @Component({
   selector: 'app-login',
@@ -20,27 +21,17 @@ export class Login {
   inSubmission = signal(false);
 
   loginForm = this.fb.nonNullable.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: [
+    email: [
       '',
-      [
-        Validators.required,
-        Validators.pattern(
-          /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
-        ),
-      ],
+      [Validators.required, Validators.email, noWhitespaceValidator()],
     ],
+    password: ['', [Validators.required, noWhitespaceValidator()]],
   });
 
   async login() {
     this.inSubmission.set(true);
 
-    this.alert.setAlert(
-      '🔐 Logging you in, please wait...',
-      'blue',
-      true,
-      1500,
-    );
+    this.alert.setAlert('🔐 Logging you in, please wait...', 'blue', true);
     try {
       await this.auth.login(this.loginForm.getRawValue());
       this.alert.setAlert(
@@ -51,13 +42,12 @@ export class Login {
       );
     } catch (error) {
       this.alert.setAlert(
-        '⛔ Login failed. Please check your credentials and try again.',
+        '⛔ Login failed. Invalid credentials.',
         'red',
         true,
-        1500,
+        4000,
       );
       this.inSubmission.set(false);
-      console.error(error);
       return;
     }
   }

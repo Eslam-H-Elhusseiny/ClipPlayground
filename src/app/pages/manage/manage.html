@@ -54,12 +54,12 @@
         @for (clip of orderedClips(); track clip.docID) {
           <app-clip-card [clip]="clip">
             <div
-              class="text-center text-2xl m-4 mt-0 bg-gray-800 transition hover:bg-indigo-400 rounded-2xl"
+              class="text-center text-xl max-sm:text-base m-4 mt-0 bg-gray-800 transition hover:bg-indigo-400 rounded-2xl"
             >
               <a
                 (click)="openModal($event, clip)"
                 href="#"
-                class="inline-block p-4 w-full"
+                class="inline-block p-3 w-full"
               >
                 <span class="inline-block">🛠️</span>
                 Edit

@@ -15,10 +15,12 @@ import {
   limit,
   startAfter,
   DocumentSnapshot,
+  getDoc,
 } from '@angular/fire/firestore';
 import { Clip } from '../models/clip';
 import { Auth } from '@angular/fire/auth';
 import { deleteObject, ref, Storage } from '@angular/fire/storage';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +30,7 @@ export class ClipService {
   private clipsCollection = collection(this.firestore, 'clips');
   private auth = inject(Auth);
   storage = inject(Storage);
+  router = inject(Router);
 
   lastClip: DocumentSnapshot<Clip> | null = null;
   finishedLoading = false;
@@ -36,16 +39,20 @@ export class ClipService {
     uid: string,
     displayName: string,
     title: string,
-    fileName: string,
+    clipFileName: string,
     clipURL: string,
+    thumbnailFileName: string,
+    thumbnailURL: string,
     timestamp: Timestamp,
   ) {
     const clip: Clip = {
       uid,
       displayName,
       title,
-      fileName,
+      clipFileName,
       clipURL,
+      thumbnailFileName,
+      thumbnailURL,
       timestamp,
     };
 
@@ -115,12 +122,29 @@ export class ClipService {
   }
 
   async deleteClip(clip: Clip) {
-    const fileRef = ref(this.storage, `clips/${clip.fileName}`);
+    const clipRef = ref(this.storage, `clips/${clip.clipFileName}`);
+    await deleteObject(clipRef);
 
-    await deleteObject(fileRef);
+    if (clip.thumbnailFileName) {
+      const thumbnailRef = ref(
+        this.storage,
+        `thumbnails/${clip.thumbnailFileName}`,
+      );
+      await deleteObject(thumbnailRef);
+    }
 
-    const docRef = doc(this.firestore, 'clips', clip.docID as string);
+    const clipDocRef = doc(this.firestore, 'clips', clip.docID as string);
+    await deleteDoc(clipDocRef);
+  }
 
-    await deleteDoc(docRef);
+  async resolveClip(id: string) {
+    const snapshot = await getDoc(doc(this.firestore, 'clips', id));
+
+    if (!snapshot.exists()) {
+      this.router.navigateByUrl('/404');
+      return null;
+    }
+
+    return snapshot.data() as Clip;
   }
 }

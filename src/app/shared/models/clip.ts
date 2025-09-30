@@ -5,7 +5,9 @@ export interface Clip {
   uid: string;
   displayName: string;
   title: string;
-  fileName: string;
+  clipFileName: string;
   clipURL: string;
+  thumbnailFileName: string;
+  thumbnailURL: string;
   timestamp: Timestamp;
 }

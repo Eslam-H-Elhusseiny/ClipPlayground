@@ -4,6 +4,7 @@ import { InputField } from '../../../shared/layout/input-field/input-field';
 import { AuthStore } from '../../../shared/services/auth-store';
 import { Alert } from '../../../shared/layout/alert/alert';
 import { AlertStore } from '../../../shared/services/alert-store';
+import { noWhitespaceValidator } from '../../../shared/validators/no-whitespace';
 
 @Component({
   selector: 'app-register',
@@ -20,21 +21,22 @@ export class Register {
 
   registerForm = this.fb.nonNullable.group(
     {
-      name: ['', [Validators.required, Validators.minLength(3)]],
+      name: [
+        '',
+        [Validators.required, Validators.minLength(3), noWhitespaceValidator()],
+      ],
       email: ['', [Validators.required, Validators.email]],
       age: [, [Validators.required, Validators.min(13), Validators.max(99)]],
       password: [
         '',
         [
           Validators.required,
-          Validators.minLength(8),
           Validators.pattern(
             /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
           ),
         ],
       ],
       confirmPassword: ['', [Validators.required]],
-      // phoneNumber: [''],
     },
     {
       validators: (registerForm) => {
@@ -77,8 +79,6 @@ export class Register {
         true,
         2000,
       );
-
-      console.error(error);
       return;
     }
   }

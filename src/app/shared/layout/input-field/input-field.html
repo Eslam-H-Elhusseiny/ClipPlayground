@@ -18,6 +18,14 @@
       </span>
     }
 
+    @if (control().hasError("maxlength")) {
+      <span class="ms-2 text-sm text-red-400">
+        This Field Cannot Exceed
+        {{ control().getError("maxlength").requiredLength }}
+        Characters Long.
+      </span>
+    }
+
     @if (control().hasError("email")) {
       <span class="ms-2 text-sm text-red-400">Please Enter A Valid Email.</span>
     }

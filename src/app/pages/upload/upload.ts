@@ -17,6 +17,7 @@ import { Auth } from '@angular/fire/auth';
 import { ClipService } from '../../shared/services/clip-service';
 import { Router } from '@angular/router';
 import { serverTimestamp, Timestamp } from '@angular/fire/firestore';
+import { noWhitespaceValidator } from '../../shared/validators/no-whitespace';
 
 @Component({
   selector: 'app-upload',
@@ -31,20 +32,38 @@ export class Upload implements OnDestroy {
   private clipService = inject(ClipService);
   private router = inject(Router);
   alert = inject(AlertStore);
+
   clipTask?: UploadTask;
+  thumbnailTask?: UploadTask;
 
   isDragOver = signal(false);
-  file = signal<File | null>(null);
+
+  videoFile = signal<File | null>(null);
+  thumbnailFile = signal<File | null>(null);
+  thumbnailPreviewUrl = signal<string | null>(null);
+
+  videoUploaded = signal(false);
+  thumbnailUploaded = signal(false);
   nextStep = signal(false);
   uploadPercentage = signal(0);
   inSubmission = signal(false);
 
   uploadForm = this.fb.nonNullable.group({
-    title: ['', [Validators.required, Validators.minLength(5)]],
+    title: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(100),
+        noWhitespaceValidator(),
+      ],
+    ],
   });
 
-  private validateFile(file: File | null): boolean {
-    if (!file || file.type !== 'video/mp4') {
+  private validateFile(file: File | null, type: 'video' | 'image'): boolean {
+    if (!file) return false;
+
+    if (type === 'video' && file.type !== 'video/mp4') {
       this.alert.setAlert(
         '⛔ Only MP4 format is allowed. Please upload an MP4 video file.',
         'red',
@@ -54,10 +73,9 @@ export class Upload implements OnDestroy {
       return false;
     }
 
-    const MAX_SIZE = 15 * 1024 * 1024;
-    if (file.size > MAX_SIZE) {
+    if (type === 'image' && !file.type.startsWith('image/')) {
       this.alert.setAlert(
-        '⛔ The selected file is too large. Maximum allowed size is 15MB.',
+        '⛔ Only image files are allowed for thumbnails.',
         'red',
         true,
         4000,
@@ -65,10 +83,16 @@ export class Upload implements OnDestroy {
       return false;
     }
 
+    const MAX_SIZE = type === 'video' ? 10 * 1024 * 1024 : 1 * 1024 * 1024;
+    if (file.size > MAX_SIZE) {
+      this.alert.setAlert('⛔ File is too large.', 'red', true, 4000);
+      return false;
+    }
+
     return true;
   }
 
-  storeFile($event: Event): void {
+  storeFile($event: Event, type: 'video' | 'image'): void {
     this.isDragOver.set(false);
 
     let droppedFile: File | null = null;
@@ -81,78 +105,158 @@ export class Upload implements OnDestroy {
     ) {
       droppedFile = $event.target.files.item(0);
     }
-    this.file.set(droppedFile);
 
-    if (!this.validateFile(droppedFile)) return;
+    if (!this.validateFile(droppedFile, type)) return;
 
-    const fileName = droppedFile!.name.replace(/\.[^/.]+$/, '');
-    this.uploadForm.controls.title.setValue(fileName);
+    if (type === 'video') {
+      this.videoFile.set(droppedFile);
+      this.videoUploaded.set(false);
 
-    this.nextStep.set(true);
+      const fileName = droppedFile!.name.replace(/\.[^/.]+$/, '').trim();
+      this.uploadForm.controls.title.setValue(fileName);
+      this.nextStep.set(true);
+    } else {
+      this.thumbnailFile.set(droppedFile);
+      this.thumbnailUploaded.set(false);
+
+      if (this.thumbnailPreviewUrl()) {
+        URL.revokeObjectURL(this.thumbnailPreviewUrl()!);
+      }
+
+      if (droppedFile) {
+        const url = URL.createObjectURL(droppedFile);
+        this.thumbnailPreviewUrl.set(url);
+      }
+    }
   }
 
-  uploadFile(): void {
-    const clipFileName = `${uuid()}.mp4`;
-    const clipPath = `clips/${clipFileName}`;
-    const clipRef = ref(this.storage, clipPath);
-    this.clipTask = uploadBytesResumable(clipRef, this.file() as File);
-
-    fromTask(this.clipTask).subscribe({
+  private handleUpload(
+    task: UploadTask,
+    fileType: 'video' | 'image',
+    onComplete: (url: string) => Promise<void>,
+  ) {
+    fromTask(task).subscribe({
       next: (snapshot: any) => {
-        this.uploadForm.disable();
-        this.inSubmission.set(true);
         const progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
         );
 
         this.uploadPercentage.set(progress);
 
-        this.alert.setAlert(
-          `⌛ Uploading your video... Please wait | ${this.uploadPercentage()}%`,
-          'blue',
-          true,
-        );
+        const alertMsg =
+          fileType === 'video'
+            ? `⌛ Uploading your video... | ${progress}%`
+            : `⌛ Uploading thumbnail... | ${progress}%`;
+
+        this.alert.setAlert(alertMsg, 'blue', true);
       },
       error: (err: any) => {
+        this.uploadForm.enable();
+        this.inSubmission.set(false);
+
         if (err.code === 'storage/canceled') {
           this.uploadPercentage.set(0);
           this.alert.setAlert(
-            '⛔ Your last upload was canceled, please try again.',
+            `⛔ ${fileType} upload was canceled, please try again.`,
             'orange',
             true,
           );
-          return;
+        } else {
+          this.alert.setAlert(
+            `⛔ ${fileType} upload failed. Please try again.`,
+            'red',
+            true,
+            4000,
+          );
         }
-        this.uploadForm.enable();
-        this.inSubmission.set(false);
       },
       complete: async () => {
-        const clipURL = await getDownloadURL(clipRef);
-
-        const clipDocRef = await this.clipService.createClip(
-          this.auth.currentUser?.uid!,
-          this.auth.currentUser?.displayName!,
-          this.uploadForm.controls.title.value,
-          clipFileName,
-          clipURL,
-          serverTimestamp() as Timestamp,
-        );
-
-        this.alert.setAlert(
-          '✅ Your video was uploaded successfully!',
-          'green',
-          true,
-          2000,
-        );
-
-        setTimeout(() => {
-          this.router.navigate(['clip', clipDocRef.id]);
-        }, 2000);
+        const storageRef = task.snapshot.ref;
+        const url = await getDownloadURL(storageRef);
+        await onComplete(url);
       },
     });
   }
 
+  uploadFile(): void {
+    if (!this.videoFile() || !this.thumbnailFile()) return;
+
+    this.uploadForm.disable();
+    this.inSubmission.set(true);
+
+    const clipFileName = `${uuid()}.mp4`;
+    const clipPath = `clips/${clipFileName}`;
+    const clipRef = ref(this.storage, clipPath);
+    this.clipTask = uploadBytesResumable(clipRef, this.videoFile() as File);
+
+    this.handleUpload(this.clipTask, 'video', async (clipURL: string) => {
+      this.videoUploaded.set(true);
+
+      const thumbnailFileName = `${uuid()}-${this.thumbnailFile()!.name}`;
+      const thumbnailPath = `thumbnails/${thumbnailFileName}`;
+      const thumbnailRef = ref(this.storage, thumbnailPath);
+
+      this.thumbnailTask = uploadBytesResumable(
+        thumbnailRef,
+        this.thumbnailFile() as File,
+      );
+
+      this.handleUpload(
+        this.thumbnailTask,
+        'image',
+        async (thumbnailURL: string) => {
+          this.thumbnailUploaded.set(true);
+
+          await this.saveClip(
+            clipFileName,
+            clipURL,
+            thumbnailFileName,
+            thumbnailURL,
+          );
+        },
+      );
+    });
+  }
+
+  filesReady() {
+    return this.videoFile() !== null && this.thumbnailFile() !== null;
+  }
+
+  private async saveClip(
+    clipFileName: string,
+    clipURL: string,
+    thumbnailFileName: string,
+    thumbnailURL: string,
+  ) {
+    const clipDocRef = await this.clipService.createClip(
+      this.auth.currentUser?.uid!,
+      this.auth.currentUser?.displayName!,
+      this.uploadForm.controls.title.value.trim(),
+      clipFileName,
+      clipURL,
+      thumbnailFileName,
+      thumbnailURL,
+      serverTimestamp() as Timestamp,
+    );
+
+    this.alert.setAlert(
+      '✅ Your video and thumbnail were uploaded successfully!',
+      'green',
+      true,
+      2000,
+    );
+
+    setTimeout(() => {
+      this.router.navigate(['clip', clipDocRef.id]);
+    }, 2000);
+  }
+
   ngOnDestroy(): void {
     this.clipTask?.cancel();
+    this.thumbnailTask?.cancel();
+
+    if (this.thumbnailPreviewUrl()) {
+      URL.revokeObjectURL(this.thumbnailPreviewUrl()!);
+    }
   }
 }

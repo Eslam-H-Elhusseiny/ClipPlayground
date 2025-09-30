@@ -2,7 +2,7 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, Params, RouterLink } from '@angular/router';
 import { ClipService } from '../../shared/services/clip-service';
 import { Clip } from '../../shared/models/clip';
-import { Edit } from '../clip/edit/edit';
+import { Edit } from './edit/edit';
 import { ModalManager } from '../../shared/services/modal-manager';
 import { ClipPlaceholder } from '../../shared/layout/clip-placeholder/clip-placeholder';
 import { ClipCard } from '../../shared/layout/clip-card/clip-card';
@@ -51,8 +51,10 @@ export class Manage implements OnInit {
         uid: data['uid'],
         displayName: data['displayName'],
         title: data['title'],
-        fileName: data['fileName'],
+        clipFileName: data['clipFileName'],
         clipURL: data['clipURL'],
+        thumbnailFileName: data['thumbnailFileName'],
+        thumbnailURL: data['thumbnailURL'],
         timestamp: data['timestamp'],
       } as Clip;
     });

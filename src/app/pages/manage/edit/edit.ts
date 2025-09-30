@@ -14,6 +14,7 @@ import { Alert } from '../../../shared/layout/alert/alert';
 import { AlertStore } from '../../../shared/services/alert-store';
 import { ClipService } from '../../../shared/services/clip-service';
 import { ModalManager } from '../../../shared/services/modal-manager';
+import { noWhitespaceValidator } from '../../../shared/validators/no-whitespace';
 
 @Component({
   selector: 'app-edit',
@@ -36,7 +37,15 @@ export class Edit {
 
   editClipForm = this.fb.nonNullable.group({
     id: [''],
-    title: ['', [Validators.required, Validators.minLength(3)]],
+    title: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(100),
+        noWhitespaceValidator(),
+      ],
+    ],
   });
 
   constructor() {
@@ -54,6 +63,8 @@ export class Edit {
 
   async editClip() {
     const control = this.editClipForm.controls;
+    let newTitle = control.title.value;
+    newTitle = newTitle.trim();
 
     this.inSubmission.set(true);
     this.alert.setAlert(
@@ -64,7 +75,9 @@ export class Edit {
     );
 
     try {
-      await this.clipService.updateClip(control.id.value, control.title.value);
+      control.title.setValue(newTitle);
+
+      await this.clipService.updateClip(control.id.value, newTitle);
     } catch (err) {
       this.inSubmission.set(false);
       this.alert.setAlert(
@@ -79,7 +92,7 @@ export class Edit {
 
     const updatedClip = this.activeClip();
     if (updatedClip) {
-      updatedClip.title = control.title.value;
+      updatedClip.title = newTitle;
       this.updatedClipData.emit(updatedClip);
     }
 

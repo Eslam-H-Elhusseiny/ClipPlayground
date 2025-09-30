@@ -4,23 +4,23 @@
   class="flex flex-col h-full bg-secondary rounded-2xl shadow-lg shadow-indigo-600/30 border-b-4 border-indigo-500 hover:border-indigo-300 hover:shadow-indigo-600/50 hover:-translate-y-2 hover:shadow-2xl transition duration-300"
 >
   <!-- Image -->
-  <a href="">
+  <a [routerLink]="['/', 'clip', clip.docID]">
     <img
-      class="w-full aspect-video object-cover rounded-t-2xl"
-      src="assets/img/1.jpg"
+      class="w-full aspect-video object-cover object-top rounded-t-2xl"
+      [src]="clip.thumbnailURL"
     />
   </a>
 
   <!-- Body -->
-  <div class="flex flex-col justify-between flex-grow p-6">
+  <div class="flex flex-col justify-between flex-grow px-6 py-4">
     <!-- Heading -->
-    <p class="w-fit mb-4 text-2xl max-lg:text-2xl">
+    <p class="w-fit mb-3 text-2xl max-lg:text-xl">
       {{ clip.title }}
     </p>
 
     <!-- Name & Date -->
-    <p>
-      Eslam Elhusseiny &#183;
+    <p class="max-lg:text-sm">
+      {{ clip.displayName }} &#183;
       <span class="text-gray-400">
         {{ clip.timestamp.toDate() | date: "dd MMM yyyy 'at' hh:mm:ss a" }}
       </span>
