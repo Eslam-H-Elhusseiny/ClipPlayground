@@ -4,10 +4,6 @@ body {
   font-family: Roboto, system-ui, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-.material-icons.text-base {
-  font-size: inherit;
-}
-
 .bg-primary {
   background-color: #161d31;
 }
