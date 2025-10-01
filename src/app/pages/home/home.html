@@ -1,6 +1,6 @@
 <!-- Header -->
 <section
-  class="relative z-10 flex h-[100vh] w-full items-center justify-center -translate-y-28"
+  class="relative z-10 flex h-[100vh] max-sm:h-[80vh] w-full items-center justify-center -translate-y-28"
 >
   <om-lava-lamp
     class="h-full w-full"
@@ -15,10 +15,10 @@
   >
   </om-lava-lamp>
   <div class="absolute pointer-events-none text-center px-4">
-    <h1 class="mb-2 lg:text-8xl max-lg:text-6xl font-bold uppercase">
+    <h1 class="mb-2 lg:text-8xl md:text-6xl text-4xl font-bold uppercase">
       Clip it and ship it!
     </h1>
-    <p>
+    <p class="max-sm:text-sm">
       The #1 app to watch, clip, and share your awesome gaming moments with your
       friends and the world! With our world-class tools, we make it incredibly
       easy to share your videos. Get started today!
@@ -29,7 +29,7 @@
 <!-- Main Content -->
 <section class="container mx-auto pt-10 pb-28">
   <h1
-    class="section-line mb-12 grid items-center gap-8 text-center text-4xl tracking-widest uppercase"
+    class="section-line mb-12 grid items-center gap-8 text-center text-2xl sm:text-4xl tracking-widest uppercase"
   >
     Latest
   </h1>
@@ -49,10 +49,10 @@
     <div class="grid gap-10 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
       <!-- Fast & Smooth -->
       <div
-        class="group relative bg-primary px-8 py-12 rounded-3xl shadow-lg border-b-4 border-indigo-500 hover:border-indigo-300 hover:shadow-indigo-500/40 transition duration-300 hover:-translate-y-4"
+        class="group relative bg-primary px-8 py-12 max-sm:p-8 rounded-3xl shadow-lg border-b-4 border-indigo-500 hover:border-indigo-300 hover:shadow-indigo-500/40 transition duration-300 hover:-translate-y-4"
       >
-        <h3 class="text-3xl font-bold text-indigo-400 mb-6">
-          <span class="text-4xl">⚡</span> Fast & Smooth
+        <h3 class="sm:text-3xl text-xl font-bold text-indigo-400 mb-4">
+          <span>⚡</span> Fast & Smooth
         </h3>
         <p class="text-gray-300 text-md">
           Upload and share high-quality clips in <strong>milliseconds</strong>.
@@ -63,10 +63,10 @@
 
       <!-- Built for Gamers -->
       <div
-        class="group relative bg-primary px-8 py-12 rounded-3xl shadow-lg border-b-4 border-purple-500 hover:border-purple-300 hover:shadow-purple-500/40 transition duration-300 hover:-translate-y-4"
+        class="group relative bg-primary px-8 py-12 max-sm:p-8 rounded-3xl shadow-lg border-b-4 border-purple-500 hover:border-purple-300 hover:shadow-purple-500/40 transition duration-300 hover:-translate-y-4"
       >
-        <h3 class="text-3xl font-bold text-purple-400 mb-6">
-          <span class="text-4xl">🕹️</span> Built for Gamers
+        <h3 class="sm:text-3xl text-xl font-bold text-purple-400 mb-4">
+          <span>🕹️</span> Built for Gamers
         </h3>
         <p class="text-gray-300 text-md">
           Tailored UX for streamers, esports players, and casual players. We
@@ -77,10 +77,10 @@
 
       <!-- Secure & Reliable -->
       <div
-        class="group relative bg-primary px-8 py-12 rounded-3xl shadow-lg border-b-4 border-green-500 hover:border-green-300 hover:shadow-green-500/40 transition duration-300 hover:-translate-y-4"
+        class="group relative bg-primary px-8 py-12 max-sm:p-8 rounded-3xl shadow-lg border-b-4 border-green-500 hover:border-green-300 hover:shadow-green-500/40 transition duration-300 hover:-translate-y-4"
       >
-        <h3 class="text-3xl font-bold text-green-400 mb-6">
-          <span class="text-4xl">🔒</span> Secure & Reliable
+        <h3 class="sm:text-3xl text-xl font-bold text-green-400 mb-4">
+          <span>🔒</span> Secure & Reliable
         </h3>
         <p class="text-gray-300 text-md">
           Powered by <strong>Firebase</strong> and the latest
@@ -96,28 +96,28 @@
 <section class="py-32">
   <div class="container mx-auto px-4">
     <div
-      class="bg-gradient-to-r from-indigo-800 to-purple-800 rounded-3xl p-20 text-center shadow-xl shadow-indigo-600/30 border-b-4 border-indigo-500 hover:border-indigo-300 hover:shadow-indigo-600/50 transition duration-300"
+      class="bg-gradient-to-r from-indigo-800 to-purple-800 rounded-3xl sm:p-20 p-8 text-center shadow-xl shadow-indigo-600/30 border-b-4 border-indigo-500 hover:border-indigo-300 hover:shadow-indigo-600/50 transition duration-300"
     >
       <h2
-        class="text-4xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-md"
+        class="text-2xl sm:text-5xl font-extrabold text-white mb-4 drop-shadow-md"
       >
         Ready To Share Your Gaming Clips?
       </h2>
-      <p class="text-xl text-indigo-100 mb-8 max-w-3xl mx-auto">
+      <p class="text-sm sm:text-xl text-indigo-100 mb-8 max-w-3xl mx-auto">
         Join the best community for gamers. Upload your jaw-dropping moments,
         get discovered, and share your plays with the world in seconds.
       </p>
       @if (!(auth.authStateWithDelay$ | async)) {
         <a
           (click)="openModal($event)"
-          class="inline-block px-8 py-4 text-lg font-bold text-white rounded-full bg-black shadow-lg shadow-black/50 transition duration-300 transform hover:bg-slate-800 hover:scale-105"
+          class="inline-block px-8 py-4 text-sm sm:text-lg font-bold text-white rounded-full bg-black shadow-lg shadow-black/50 transition duration-300 transform hover:bg-slate-800 hover:scale-105"
         >
           Start Uploading Now
         </a>
       } @else {
         <a
           routerLink="/upload"
-          class="inline-block px-8 py-4 text-lg font-bold text-white rounded-full bg-black shadow-lg shadow-black/50 transition duration-300 transform hover:bg-slate-800 hover:scale-105"
+          class="inline-block px-8 py-4 text-sm sm:text-lg font-bold text-white rounded-full bg-black shadow-lg shadow-black/50 transition duration-300 transform hover:bg-slate-800 hover:scale-105"
         >
           Start Uploading Now
         </a>
